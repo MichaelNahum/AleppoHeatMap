@@ -14,6 +14,7 @@
     "express-handlebars": "^3.0.0",
     "mongodb": "^2.1.20",
     "mongoose": "^4.4.19",
+    "request": "^2.72.0",
     "twit": "^2.2.4"
   }
 }

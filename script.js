@@ -1,13 +1,12 @@
-var express   = require('express');
-var hbs       = require('express-handlebars');
-var app       = express();
-var twit      = require('twit');
-var http      = require('http');
-var placeList = [];
+var express      = require('express');
+var hbs          = require('express-handlebars');
+var app          = express();
+var twit         = require('twit');
+var http         = require('http');
+var placeList    = [];
 var fetchResults = [];
+var placeName    = {num_mentions: 0}
 // var mongoose= require("./db/connection");
-// var Tweet   = mongoose.model("Tweet");
-//
 
 // The Geonames API call. Returns an array of 131 objects,
 var url = "http://api.geonames.org/childrenJSON?lang=ar&geonameId=170063&username=hotspotsm"
@@ -21,15 +20,18 @@ http.get(url, function(res){
     var parsed = JSON.parse(body);
     for(var i=0; i < parsed.geonames.length; i++){
       placeList.push(parsed.geonames[i]);
-      getTweets(i);
+      // getTweets(i);
     }
-    db.DATABASENAME.insert(placeList)
-  })
-})
+    // db.collection.('DATABASENAME').save(jsonResult, function(err, records){
+    //   if (err) throw err;
+    //   console.log("record added");
+    // });
+  });
+});
 
 function getTweets(i) {
   var params = {
-    q: placeList[i].name +' since:2016-05-30',                                                             //since yesterday?
+    q: placeList[i].name +' since:2016-05-31',                                                             //since yesterday?
     lang: "ar",
     count: 5
   }

@@ -2,7 +2,6 @@ var express   = require('express');
 var hbs       = require('express-handlebars');
 var app       = express();
 var twit      = require('twit');
-var request   = require("request");
 var http      = require('http');
 var placeList = [];
 var fetchResults = [];
@@ -24,6 +23,7 @@ http.get(url, function(res){
       placeList.push(parsed.geonames[i]);
       getTweets(i);
     }
+    db.DATABASENAME.insert(placeList)
   })
 })
 
@@ -31,7 +31,7 @@ function getTweets(i) {
   var params = {
     q: placeList[i].name +' since:2016-05-30',                                                             //since yesterday?
     lang: "ar",
-    count: 10
+    count: 5
   }
   twitterCall.get('search/tweets', params).then(function(response){
     var tweets = response.data.statuses

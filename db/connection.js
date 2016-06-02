@@ -1,9 +1,8 @@
 var mongoose = require("mongoose");
 var seedData = require("./seeds.json")
-mongoose.connect("mongodb://localhost/testdb");
 
 
-var placeName = mongoose.Schema({
+var placeNameSchema = mongoose.Schema({
   adminCode1: String,
   lng: String,
   geonameId: Number,
@@ -22,13 +21,8 @@ var placeName = mongoose.Schema({
 })
 
 
-mongoose.model("placeName", placeName);
+mongoose.model("placeName", placeNameSchema);
+mongoose.connect("mongodb://localhost/testdb");
 
-//really not sure about this.
-placeName.remove({}).then(function(){
-  placeName.collection.insert(seedData).then(function(){
-    process.exit();
-  });
-});
 
 module.exports = mongoose;

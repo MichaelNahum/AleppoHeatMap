@@ -22,9 +22,7 @@ app.get("/", function(req, res){
 });
 
 app.get("/results", function(req, res){
-
-  var url = "http://api.geonames.org/childrenJSON?lang=ar&geonameId=170063&username=hotspotsm"
-
+  var url = "http://api.geonames.org/childrenJSON?lang=ar&geonameId=170062&username=hotspotsm"
   rp(url)
   .then(function(data){
     var parsed = JSON.parse(data)
@@ -43,7 +41,7 @@ app.get("/results", function(req, res){
       var params = {
           q: place.name + ' since:2016-05-31',                                              //since yesterday?
           lang: "ar",
-          count: 100
+          count: 10
         }
      twitterCall
      .get('search/tweets', params)
@@ -58,17 +56,6 @@ app.get("/results", function(req, res){
   res.render("results", {results: placeList});
 });
 
-// function getTweets(name) {
-//
-//    twitterCall
-//   .get('search/tweets', params)
-//   .then(function(response){
-//     // error checking if no tweets
-//     var tweets = response.data.statuses;
-//     var numOfMentions = tweets.length;
-//     return numOfMentions
-//   })
-// }
 
 app.listen(3001, function(){
   console.log("------------it's aliiive!!!------------");

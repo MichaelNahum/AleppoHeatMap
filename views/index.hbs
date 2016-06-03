@@ -18,25 +18,17 @@
       console.log("im called");
       $.getJSON("/results", function(data){
         var heatmapData = []
+        d=data;
         data.forEach(function (place) {
-          heatmapData.push({location: new google.maps.LatLng(parseInt(place.lat), parseInt(place.lng)), weight: place.num_mentions})
+          heatmapData.push({location: new google.maps.LatLng(parseFloat(place.lat), parseFloat(place.lng)), weight: place.num_mentions})
         })
-        console.log(heatmapData);
         return heatmapData
       }).then(function(stuff) {
-        var random = []
+        var anotherHeatMapArray = []
         for(var i=0; i < stuff.length; i++) {
-          random.push({location: new google.maps.LatLng(parseInt(stuff[i].lat), parseInt(stuff[i].lng)), weight: stuff[i].num_mentions})
+          random.push({location: new google.maps.LatLng(parseFloat(stuff[i].lat), parseFloat(stuff[i].lng)), weight: stuff[i].num_mentions})
         }
-        console.log("about to place data on map", random);
-        console.log("in promise");
-        var test = [
-              new google.maps.LatLng(36.49986, 37.18382),
-                new google.maps.LatLng(37.782, -122.445),
-               new google.maps.LatLng(37.782, -122.443)
-        ]
-        console.log(test);
-        loadMap(random)
+        loadMap(anotherHeatMapArray)
       });
 
       function loadMap(heatMapData) {
@@ -45,15 +37,13 @@
           zoom: 10,
           mapTypeId: google.maps.MapTypeId.SATELLITE
         });
-
         heatmap = new google.maps.visualization.HeatmapLayer({
           data: heatMapData,
           map: map
         })
         heatmap.setMap(map);
     }
-    }
-
+  }
     </script>
   </body>
 </html>

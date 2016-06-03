@@ -1,13 +1,14 @@
-var express      = require('express');
-var hbs          = require('express-handlebars');
-var app          = express();
-var db           = require('./db/connection');
-var http         = require('http');
-var rp           = require('request-promise')
-var mongoose     = require("./db/connection");
-var twitterCall  = require('./twittercall');
-var placeList    = [];
+var express       = require('express');
+var hbs           = require('express-handlebars');
+var app           = express();
+var db            = require('./db/connection');
+var http          = require('http');
+var rp            = require('request-promise')
+var mongoose      = require("./db/connection");
+var twitterCall   = require('./twittercall');
+var placeList     = [];
 var numOfMentions = [];
+var getDate       = require("./date");
 
 app.set("view engine", "hbs");
 app.engine(".hbs", hbs({
@@ -22,7 +23,7 @@ placeList = [];
 function get_tweets() {
     if (placeList.length > 0) return;
 
-    var url = "http://api.geonames.org/childrenJSON?lang=ar&geonameId=170063&username=hotspotsm"
+    var url = "http://api.geonames.org/childrenJSON?lang=ar&"+ "geonameId=170063" + "&username=hotspotsm"
     rp(url)
     .then(function(data){
       var parsed = JSON.parse(data)
@@ -38,8 +39,9 @@ function get_tweets() {
       }
     }).then(function() {
       placeList.forEach(function(place) {
+
         var params = {
-          q: place.name + ' since:2016-05-31',                                              //since yesterday?
+          q: place.name + ' since:' + getDate.yesterdayString,
           lang: "ar",
           count: 10
         }
@@ -54,16 +56,20 @@ function get_tweets() {
     })
 }
 
-get_tweets(); 
+get_tweets();
 
 app.get("/", function(req, res){
+  res.render("search");
+});
+
+
+app.get("/map", function(req, res){
   res.render("index");
 });
 
 app.get("/results", function(req, res){
   res.json(placeList);
 });
-
 
 app.listen(3001, function(){
   console.log("------------it's aliiive!!!------------");

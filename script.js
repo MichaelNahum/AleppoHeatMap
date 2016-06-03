@@ -18,12 +18,6 @@ app.engine(".hbs", hbs({
 }));
 app.use("/assets", express.static('assets'));
 
-// Never try to get external data from one of your node request handlers.
-// That response is asynchronous, and hard to coordinate. Also, every single time you refresh the page it'll
-// make a call to twitter, which is waaaaay too much.
-
-// So instead we'll move that request to another function.
-
 placeList = [];
 function get_tweets() {
     if (placeList.length > 0) return;
@@ -60,7 +54,7 @@ function get_tweets() {
     })
 }
 
-get_tweets(); // this will happen as soon as the server starts up
+get_tweets(); 
 
 app.get("/", function(req, res){
   res.render("index");

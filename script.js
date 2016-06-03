@@ -43,7 +43,7 @@ function get_tweets() {
         var params = {
           q: place.name + ' since:' + getDate.yesterdayString,
           lang: "ar",
-          count: 10
+          count: 12
         }
         twitterCall
         .get('search/tweets', params)

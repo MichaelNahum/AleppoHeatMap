@@ -4,7 +4,6 @@ var app           = express();
 var db            = require('./db/connection');
 var http          = require('http');
 var rp            = require('request-promise')
-var mongoose      = require("./db/connection");
 var twitterCall   = require('./twittercall');
 var placeList     = [];
 var numOfMentions = [];

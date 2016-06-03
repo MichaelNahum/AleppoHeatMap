@@ -1,7 +1,6 @@
 var express       = require('express');
 var hbs           = require('express-handlebars');
 var app           = express();
-var db            = require('./db/connection');
 var http          = require('http');
 var rp            = require('request-promise')
 var twitterCall   = require('./twittercall');

@@ -9,6 +9,7 @@ var placeList     = [];
 var numOfMentions = [];
 var getDate       = require("./date");
 
+app.set("port", process.env.PORT || 3001)
 app.set("view engine", "hbs");
 app.engine(".hbs", hbs({
   extname:       ".hbs",
@@ -70,6 +71,6 @@ app.get("/results", function(req, res){
   res.json(placeList);
 });
 
-app.listen(3001, function(){
+app.listen(app.get("port"), function(){
   console.log("------------it's aliiive!!!------------");
 });
